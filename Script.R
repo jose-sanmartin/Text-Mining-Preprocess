@@ -5,14 +5,14 @@ library(ggplot2)
 df$texto <- tolower(df$v)
 df$texto <- removePunctuation(df$texto)
 df$texto <- removeNumbers(df$texto)
-df$texto <- gsub("\\bnum\\b", "", df$texto) # La forma "\\*\\b" representa una expresión regular capaz de identificar texto aislado
-df$texto <- gsub("enero", "", df$texto)
-df$texto = trimws(df$texto, which = "both")
-df$texto <- stripWhitespace(df$texto)
+df$texto <- gsub("\\bnum\\b", "", df$texto) # La forma "\\*\\b" representa una expresion regular capaz de identificar texto aislado
+df$texto <- gsub("enero", "", df$texto) # Eliminacion simple de terminos
+df$texto = trimws(df$texto, which = "both") # eliminacion de espacios en blanco al inicio y final del vector str
+df$texto <- stripWhitespace(df$texto) # eliminacion de espacios dobles o mas en blanco dentro del vector str
 
-corpus <- Corpus(VectorSource(df$texto))
-corpus_clean <- tm_map(corpus, removeWords, stopwords("spanish"))
-df$texto_limpio <- sapply(corpus_clean, identity)
+corpus <- Corpus(VectorSource(df$texto)) #transformacion de la variable str en un corpus
+corpus_clean <- tm_map(corpus, removeWords, stopwords("spanish")) #identificacion de stopwords
+df$texto_limpio <- sapply(corpus_clean, identity) #eliminacion de stopwords
 
 bigram_data <- df %>%
   unnest_tokens(bigram, texto, token = "ngrams", n = 2) # El n permite modifica distintos tipos de n-gramas
