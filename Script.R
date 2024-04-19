@@ -2,7 +2,7 @@ library(tm)
 library(tidytext)
 library(ggplot2)
 
-df$texto <- tolower(df$Noticia.Completa)
+df$texto <- tolower(df$v)
 df$texto <- removePunctuation(df$texto)
 df$texto <- removeNumbers(df$texto)
 df$texto <- gsub("\\bnum\\b", "", df$texto) # La forma "\\*\\b" representa una expresión regular capaz de identificar texto aislado
